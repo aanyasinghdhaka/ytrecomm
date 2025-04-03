@@ -83,23 +83,44 @@
         <select id="marriage">
             <option value="single">Single</option>
             <option value="married">Married</option>
+            <option value="divorced">Divorced</option>
+            <option value="widowed">Widowed</option>
         </select>
 
         <label>Age Group:</label>
         <select id="age">
-            <option value="20s">20-29</option>
-            <option value="30s">30-39</option>
-            <option value="40s">40-49</option>
-            <option value="50s">50-59</option>
-            <option value="retirement">60+ (Retired)</option>
+            <option value="18-25">18-25 (College / Early Career)</option>
+            <option value="26-35">26-35 (Mid Career Growth)</option>
+            <option value="36-45">36-45 (Peak Career)</option>
+            <option value="46-55">46-55 (Pre-Retirement)</option>
+            <option value="56+">56+ (Retirement & Legacy Planning)</option>
         </select>
 
-        <label>Investment Goal:</label>
+        <label>Employment Type:</label>
+        <select id="employment">
+            <option value="salaried">Salaried (Private / Govt.)</option>
+            <option value="business">Business Owner</option>
+            <option value="freelancer">Freelancer / Consultant</option>
+            <option value="retired">Retired</option>
+            <option value="student">Student</option>
+        </select>
+
+        <label>Annual Income (₹):</label>
+        <select id="income">
+            <option value="low">Less than 5 LPA</option>
+            <option value="mid">5-15 LPA</option>
+            <option value="high">15-50 LPA</option>
+            <option value="ultra">50+ LPA (HNI)</option>
+        </select>
+
+        <label>Primary Investment Goal:</label>
         <select id="goal">
             <option value="wealth">Wealth Growth</option>
             <option value="retirement">Retirement Planning</option>
             <option value="passive">Passive Income</option>
             <option value="tax">Tax Saving</option>
+            <option value="education">Children's Education Fund</option>
+            <option value="home">Buying a House</option>
         </select>
 
         <label>Monthly Investment Capacity (₹):</label>
@@ -118,6 +139,10 @@
             <option value="mutualFunds">Mutual Funds</option>
             <option value="gold">Gold & Precious Metals</option>
             <option value="realEstate">Real Estate</option>
+            <option value="crypto">Cryptocurrency</option>
+            <option value="fixedDeposit">Fixed Deposits (FDs)</option>
+            <option value="bonds">Government / Corporate Bonds</option>
+            <option value="reit">REITs (Real Estate Investment Trusts)</option>
         </select>
 
         <button type="submit">Get Learning Plan</button>
@@ -128,41 +153,85 @@
     <script>
         document.getElementById("financeForm").addEventListener("submit", function(event) {
             event.preventDefault();
-
             let age = document.getElementById("age").value;
-            let investment = parseInt(document.getElementById("investment").value) || 0;
-            let goal = document.getElementById("goal").value;
-            let risk = document.getElementById("risk").value;
-            let investmentType = document.getElementById("investmentType").value;
+    let employment = document.getElementById("employment").value;
+    let income = document.getElementById("income").value;
+    let investment = parseInt(document.getElementById("investment").value) || 0;
+    let goal = document.getElementById("goal").value;
+    let risk = document.getElementById("risk").value;
+    let investmentType = document.getElementById("investmentType").value;
 
-            let topics = ["Personal Finance Basics", "Emergency Fund Essentials"];
+    let topics = ["Personal Finance Basics", "Emergency Fund Essentials"];
 
-            if (goal === "wealth") {
-                topics.push("How to Grow Wealth Fast", "Best Long-Term Investments");
-            }
-            if (goal === "retirement") {
-                topics.push("Retirement Planning for Beginners", "Best Retirement Plans in India");
-            }
-            if (goal === "passive") {
-                topics.push("How to Earn Passive Income", "Dividend Stocks for Monthly Income");
-            }
-            if (goal === "tax") {
-                topics.push("Tax Saving Strategies", "Best ELSS Funds for Tax Saving");
-            }
+    // Age-Based Learning Path
+    if (age === "18-25") {
+        topics.push("Money Management for Students & Young Professionals");
+    } else if (age === "26-35") {
+        topics.push("How to Build Wealth in Your 30s");
+    } else if (age === "36-45") {
+        topics.push("Best Investment Strategies for Peak Career Growth");
+    } else if (age === "46-55") {
+        topics.push("Pre-Retirement Investment Planning");
+    } else if (age === "56+") {
+        topics.push("Retirement Planning & Passive Income Sources");
+    }
 
-            if (investmentType === "stocks") {
-                topics.push("Stock Market Basics", "Best Stocks to Invest in India");
-            }
-            if (investmentType === "mutualFunds") {
-                topics.push("How to Choose Mutual Funds", "Best SIPs for Beginners");
-            }
-            if (investmentType === "gold") {
-                topics.push("Gold ETFs vs Physical Gold", "How to Invest in Sovereign Gold Bonds");
-            }
-            if (investmentType === "realEstate") {
-                topics.push("Real Estate Investing for Beginners", "REITs vs Buying Property");
-            }
+    // Income & Employment Based Learning
+    if (employment === "freelancer" || employment === "business") {
+        topics.push("How to Manage Irregular Income", "Tax Planning for Self-Employed");
+    }
 
+    if (income === "low") {
+        topics.push("Best Investment Options for Low Income Earners");
+    } else if (income === "ultra") {
+        topics.push("Wealth Management & Tax Saving for HNIs");
+    }
+
+    // Goal-Based Learning
+    if (goal === "wealth") {
+        topics.push("How to Build Wealth from Scratch", "Long-Term Wealth Strategies");
+    }
+    if (goal === "retirement") {
+        topics.push("Best Retirement Plans in India", "How to Build a Retirement Corpus");
+    }
+    if (goal === "passive") {
+        topics.push("Top 5 Passive Income Sources", "Dividend Investing for Monthly Income");
+    }
+    if (goal === "tax") {
+        topics.push("Tax Saving Strategies in India", "Best ELSS Mutual Funds for Tax Savings");
+    }
+    if (goal === "education") {
+        topics.push("How to Save for Children's Education", "Best Child Investment Plans in India");
+    }
+    if (goal === "home") {
+        topics.push("How to Save for Buying a House", "Best Home Loan Options in India");
+    }
+
+    // Investment-Type-Based Learning
+    if (investmentType === "stocks") {
+        topics.push("Stock Market Basics for Beginners", "How to Pick the Best Stocks in India");
+    }
+    if (investmentType === "mutualFunds") {
+        topics.push("How to Choose the Right Mutual Funds", "Best SIPs for Beginners");
+    }
+    if (investmentType === "gold") {
+        topics.push("Investing in Gold ETFs vs Physical Gold", "How to Buy Sovereign Gold Bonds");
+    }
+    if (investmentType === "realEstate") {
+        topics.push("Real Estate Investment Strategies", "REITs vs Buying Property");
+    }
+    if (investmentType === "crypto") {
+        topics.push("Should You Invest in Cryptocurrency?", "Best Crypto Investment Strategies");
+    }
+    if (investmentType === "fixedDeposit") {
+        topics.push("Fixed Deposits vs Mutual Funds: Which is Better?", "Best High-Interest Fixed Deposits in India");
+    }
+    if (investmentType === "bonds") {
+        topics.push("Investing in Government & Corporate Bonds", "How to Buy RBI Bonds in India");
+    }
+    if (investmentType === "reit") {
+        topics.push("How to Invest in REITs in India", "Real Estate vs REITs: Which is Better?");
+    }
             fetchYouTubeVideos(topics);
         });
 
