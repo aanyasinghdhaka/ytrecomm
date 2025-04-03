@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Financial Learning Path</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            text-align: left;
+            max-width: 400px;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+        select, input, button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #results {
+            margin-top: 30px;
+            text-align: left;
+        }
+        .video-section {
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+        }
+        .video {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .video img {
+            width: 120px;
+            border-radius: 5px;
+        }
+        .video a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .video a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📈 Personalized Financial Learning Path</h1>
+    <form id="financeForm">
+        <label>Marital Status:</label>
+        <select id="marriage">
+            <option value="single">Single</option>
+            <option value="married">Married</option>
+        </select>
+
+        <label>Age Group:</label>
+        <select id="age">
+            <option value="20s">20-29</option>
+            <option value="30s">30-39</option>
+            <option value="40s">40-49</option>
+            <option value="50s">50-59</option>
+            <option value="retirement">60+ (Retired)</option>
+        </select>
+
+        <label>Investment Goal:</label>
+        <select id="goal">
+            <option value="wealth">Wealth Growth</option>
+            <option value="retirement">Retirement Planning</option>
+            <option value="passive">Passive Income</option>
+            <option value="tax">Tax Saving</option>
+        </select>
+
+        <label>Monthly Investment Capacity (₹):</label>
+        <input type="number" id="investment" placeholder="Enter amount" min="0">
+
+        <label>Risk Appetite:</label>
+        <select id="risk">
+            <option value="low">Low (Safe & Secure)</option>
+            <option value="medium">Medium (Balanced Growth)</option>
+            <option value="high">High (Aggressive Growth)</option>
+        </select>
+
+        <label>Preferred Investment Type:</label>
+        <select id="investmentType">
+            <option value="stocks">Stocks</option>
+            <option value="mutualFunds">Mutual Funds</option>
+            <option value="gold">Gold & Precious Metals</option>
+            <option value="realEstate">Real Estate</option>
+        </select>
+
+        <button type="submit">Get Learning Plan</button>
+    </form>
+
+    <div id="results"></div>
+
+    <script>
+        document.getElementById("financeForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            let age = document.getElementById("age").value;
+            let investment = parseInt(document.getElementById("investment").value) || 0;
+            let goal = document.getElementById("goal").value;
+            let risk = document.getElementById("risk").value;
+            let investmentType = document.getElementById("investmentType").value;
+
+            let topics = ["Personal Finance Basics", "Emergency Fund Essentials"];
+
+            if (goal === "wealth") {
+                topics.push("How to Grow Wealth Fast", "Best Long-Term Investments");
+            }
+            if (goal === "retirement") {
+                topics.push("Retirement Planning for Beginners", "Best Retirement Plans in India");
+            }
+            if (goal === "passive") {
+                topics.push("How to Earn Passive Income", "Dividend Stocks for Monthly Income");
+            }
+            if (goal === "tax") {
+                topics.push("Tax Saving Strategies", "Best ELSS Funds for Tax Saving");
+            }
+
+            if (investmentType === "stocks") {
+                topics.push("Stock Market Basics", "Best Stocks to Invest in India");
+            }
+            if (investmentType === "mutualFunds") {
+                topics.push("How to Choose Mutual Funds", "Best SIPs for Beginners");
+            }
+            if (investmentType === "gold") {
+                topics.push("Gold ETFs vs Physical Gold", "How to Invest in Sovereign Gold Bonds");
+            }
+            if (investmentType === "realEstate") {
+                topics.push("Real Estate Investing for Beginners", "REITs vs Buying Property");
+            }
+
+            fetchYouTubeVideos(topics);
+        });
+
+        async function fetchYouTubeVideos(topics) {
+            const YT_API_KEY = "AIzaSyDgrW-jeUrpfLYZjr3gH4paO-tqvFLc128";
+            let resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = "<h2>📚 Your Personalized Learning Path</h2>";
+
+            for (let topic of topics) {
+                const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(topic)}&type=video&maxResults=2&key=${YT_API_KEY}`;
+                try {
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    displayVideos(data.items, topic);
+                } catch (error) {
+                    console.error("YouTube API Error:", error);
+                }
+            }
+        }
+
+        function displayVideos(videos, category) {
+            let resultsDiv = document.getElementById("results");
+            let section = document.createElement("div");
+            section.classList.add("video-section");
+            section.innerHTML = `<h3>🎯 ${category}</h3>`;
+
+            videos.forEach(video => {
+                section.innerHTML += `
+                    <div class="video">
+                        <img src="${video.snippet.thumbnails.medium.url}" alt="${video.snippet.title}">
+                        <a href="https://www.youtube.com/watch?v=${video.id.videoId}" target="_blank">${video.snippet.title}</a>
+                    </div>
+                `;
+            });
+
+            resultsDiv.appendChild(section);
+        }
+    </script>
+
+</body>
+</html>
